@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'ClusterTextbook.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ClusterTextbook',
+        'USER': 'HSE_student',
+        'PASSWORD': 'ok?da9',
+        'HOST': 'localhost',  # Если база данных находится на другом хосте, укажите IP-адрес или доменное имя
+        'PORT': '5432',       # Порт по умолчанию для PostgreSQL
     }
 }
 
