@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Оглавление</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd; font-size: 18px;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <span class="navbar-brand mb-0 h1">Электронное пособие</span>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
+    </div>
+</nav>
 <h2>Оглавление</h2>
 <ol>
     <li><a href="/articles/introduction">Введение</a></li>
@@ -12,5 +24,6 @@
     <li><a href="/articles/dbscan">DBSCAN</a></li>
     <li><a href="/articles/hierarchy-clusters">Иерархическая кластеризация</a></li>
 </ol>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
