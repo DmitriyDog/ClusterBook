@@ -5,12 +5,25 @@
     <meta charset="UTF-8">
     <title>Оглавление</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <style>.article { margin-left: 15px; }</style>
+    <style>.article { margin-left: 15px; }
+
+            body {
+            position: relative; /* Необходимо для правильного позиционирования псевдоэлемента */
+            min-height: 100vh; /* Убедимся, что тело занимает минимум весь экран */}
+
+            body::before {
+            content: "";
+            position: absolute;
+            left: 15%;
+            width: 70%;
+            height: 100%; /* Высота равна половине высоты окна браузера */
+            background-color: #FAFAFA; /* Серый цвет заливки */
+            z-index: -1;}</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #E0F3AA; font-size: 18px;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-        <span class="navbar-brand mb-0 h1">Алгоритмы кластеризации</span>
+        <a class="navbar-brand mb-0 h1" href="/index">Алгоритмы кластеризации</a>
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Поиск</button>
@@ -19,34 +32,15 @@
 </nav>
 <div class="container-fluid" style="margin-top: 20px;">
     <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-11 h2">Оглавление</div>
-    </div>
-    <div class="row">
         <div class="col"></div>
-        <div class="col-8">
-            <a href="/articles/introduction" class="article">Введение</a>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-8">
-            <a href="/articles/k-means" class="article">K-means</a>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-8">
-            <a href="/articles/dbscan" class="article">DBSCAN</a>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-8">
-            <a href="/articles/hierarchy-clusters" class="article">Иерархическая кластеризация</a>
+        <div class="col-7">
+            <h2>Оглавление</h2>
+            <ol>
+                <li><a href="/articles/introduction" class="article">Введение</a></li>
+                <li><a href="/articles/k-means" class="article">K-means</a></li>
+                <li><a href="/articles/dbscan" class="article">DBSCAN</a></li>
+                <li><a href="/articles/hierarchy-clusters" class="article">Иерархическая кластеризация</a></li>
+            </ol>
         </div>
         <div class="col-3"></div>
     </div>

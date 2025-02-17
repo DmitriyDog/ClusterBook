@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Введение</title>
+    <title>Оглавление</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"/>
+    <style>.article { margin-left: 15px; }</style>
 </head>
 <body>
-<h2>Введение в кластеризацию</h2>
+<nav class="navbar navbar-expand-lg" style="background-color: #E0F3AA; font-size: 18px;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand mb-0 h1" href="/index">Алгоритмы кластеризации</a>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 d-none d-md-block" style="margin-top: 20px;">
+            <h4>Содержание</h4>
+            <ol>
+                <li><a href="/articles/introduction" class="article fs-6">Введение</a></li>
+                <li><a href="/articles/k-means" class="article">K-means</a></li>
+                <li><a href="/articles/dbscan" class="article">DBSCAN</a></li>
+                <li><a href="/articles/hierarchy-clusters" class="article">Иерархическая кластеризация</a></li>
+            </ol>
+        </div>
+        <div class="col" style="background-color: #FAFAFA; height: 100vh;">
+            <h2 style="margin-top: 20px;">Введение в кластеризацию</h2>
+            <h3>Часть 1</h3>
+            <p>Кластерный анализ (англ. cluster analysis) — многомерная статистическая процедура,
+                выполняющая сбор данных, содержащих информацию о выборке объектов,
+                и затем упорядочивающая объекты в сравнительно однородные группы.</p>
+            <p>Кластерный анализ выполняет следующие основные задачи:
+            разработка типологии или классификации,
+            исследование полезных концептуальных схем группирования объектов,
+            порождение гипотез на основе исследования данных,
+            проверка гипотез или исследования для определения, действительно ли типы (группы),
+                выделенные тем или иным способом, присутствуют в имеющихся данных.</p>
+            <h3>Часть 2</h3>
+            <p>Независимо от предмета изучения применение кластерного анализа предполагает следующие этапы:
+            Отбор выборки для кластеризации. Подразумевается, что имеет смысл кластеризовать только количественные данные.
+            Определение множества переменных, по которым будут оцениваться объекты в выборке, то есть признакового пространства.
+            Вычисление значений той или иной меры сходства (или различия) между объектами.
+            Применение метода кластерного анализа для создания групп сходных объектов.
+            Проверка достоверности результатов кластерного решения.</p>
+            <pre class="prettyprint linenums" style="border-top: 15px solid green">
+                <code class="language-python">for i in range(20):
+                    print(i)</code>
+            </pre>
+            <p class="text-center">
+                <a href="/index">Оглавление</a>
+                <a href="/articles/k-means">->K-средних</a>
+            </p>
+        </div>
+        <div class="col-3 d-none d-lg-block">
+            <h5 style="margin-top: 20px;">Содержание главы</h5>
+            <ol>
+                <li>Часть 1</li>
+                <li>Часть 2</li>
+            </ol>
+        </div>
+    </div></div>
 </body>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script> window.onload = function() { prettyPrint(); }; </script>
 </html>
