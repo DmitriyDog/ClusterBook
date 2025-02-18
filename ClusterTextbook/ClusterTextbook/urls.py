@@ -16,13 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+#from ClusterTextbook.articles import urls
 
 urlpatterns = [
-    path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
-    path("index/", views.index),
-    path("articles/<str:article_name>/", views.article_page, name='article_page')
+    path("", include("articles.urls")),
+    path("articles/<str:article_name>/", include("articles.urls"))
 ]
