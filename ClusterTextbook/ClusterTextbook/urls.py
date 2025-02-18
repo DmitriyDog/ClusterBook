@@ -16,10 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-#from ClusterTextbook.articles import urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("articles.urls")),
-    path("articles/<str:article_name>/", include("articles.urls"))
-]
+    path("articles/<str:article_name>/", include("articles.urls"))]
