@@ -18,7 +18,28 @@
             width: 70%;
             height: 100%; /* Высота равна половине высоты окна браузера */
             background-color: #FAFAFA; /* Серый цвет заливки */
-            z-index: -1;}</style>
+            z-index: -1;}
+
+            ol {
+               /* убираем стандартную нумерацию */
+               list-style: none;
+               /* Идентифицируем счетчик и даем ему имя li.
+                Значение счетчика не указано - по умолчанию оно равно 0 */
+               counter-reset: li;
+            }
+
+            li:before {
+               /* Определяем элемент, который будет нумероваться — li.
+                Псевдоэлемент before указывает, что содержимое, вставляемое
+                 при помощи свойства content, будет располагаться перед пунктами списка.
+                  Здесь же устанавливается значение приращения счетчика (по умолчанию равно 1). */
+               counter-increment: li;
+               /* С помощью свойства content выводится номер пункта списка.
+                counters() означает, что генерируемый текст представляет собой
+                 значения всех счетчиков с таким именем. Точка в кавычках добавляет
+                  разделяющую точку между цифрами, а точка с пробелом добавляется перед
+                   содержимым каждого пункта списка */
+               content: counters(li, ".") ". ";}</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #E0F3AA; font-size: 18px;">
@@ -40,6 +61,23 @@
                 <li><a href="/articles/k-means" class="article">K-means</a></li>
                 <li><a href="/articles/dbscan" class="article">DBSCAN</a></li>
                 <li><a href="/articles/hierarchy-clusters" class="article">Иерархическая кластеризация</a></li>
+                {% if chapter_list %}
+                    {% for chap in chapter_list %}
+                        <li>
+                        {% if chap.article_set.all|length > 1 %}
+                            {{ chap.chapter_name }}
+                            <ol>
+                                {% for article in chap.article_set.all %}
+                                    <li><a href="/">{{ article.article_name }}</a></li>
+                                {% endfor %}
+                            </ol>
+                        {% else %}
+                            <a href="/"> {{ chap.chapter_name }}</a>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
             </ol>
         </div>
         <div class="col-3"></div>
