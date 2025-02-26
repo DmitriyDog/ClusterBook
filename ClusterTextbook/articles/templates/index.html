@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Оглавление{% endblock %}
+
 {% block page_content %}
 <div class="row">
         <div class="col"></div>
@@ -14,18 +15,19 @@
                     {% for chap in chapter_list %}
                         <li>
                         {% if chap.article_set.all|length > 1 %}
-                            {{ chap.chapter_name }}
+                            <span style="font-size: 1.5rem">{{ chap.chapter_name }}</span>
                             <ol>
                                 {% for article in chap.article_set.all %}
-                                    <li><a href="/">{{ article.article_name }}</a></li>
+                                    <li><a href="{% url 'article_page' article.pk %}">{{ article.article_name }}</a></li>
                                 {% endfor %}
                             </ol>
                         {% else %}
-                            <a href="/"> {{ chap.chapter_name }}</a>
+                            {% with article=chap.article_set.all|first %}
+                            <a href="{% url 'article_page' article.pk %}">{{ chap.chapter_name }}</a>
+                            {% endwith %}
                         {% endif %}
                         </li>
                     {% endfor %}
-                {% else %}
                 {% endif %}
             </ol>
         </div>
