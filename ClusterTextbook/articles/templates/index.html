@@ -6,30 +6,7 @@
         <div class="col"></div>
         <div class="col-7">
             <h2>Оглавление</h2>
-            <ol>
-                <li><a href="/articles/introduction" class="article">Введение</a></li>
-                <li><a href="/articles/k-means" class="article">K-means</a></li>
-                <li><a href="/articles/dbscan" class="article">DBSCAN</a></li>
-                <li><a href="/articles/hierarchy-clusters" class="article">Иерархическая кластеризация</a></li>
-                {% if chapter_list %}
-                    {% for chap in chapter_list %}
-                        <li>
-                        {% if chap.article_set.all|length > 1 %}
-                            <span style="font-size: 1.5rem">{{ chap.chapter_name }}</span>
-                            <ol>
-                                {% for article in chap.article_set.all %}
-                                    <li><a href="{% url 'article_page' article.pk %}">{{ article.article_name }}</a></li>
-                                {% endfor %}
-                            </ol>
-                        {% else %}
-                            {% with article=chap.article_set.all|first %}
-                            <a href="{% url 'article_page' article.pk %}">{{ chap.chapter_name }}</a>
-                            {% endwith %}
-                        {% endif %}
-                        </li>
-                    {% endfor %}
-                {% endif %}
-            </ol>
+            {% include "quick-textbook-navigation.html" %}
         </div>
         <div class="col-3"></div>
 </div>

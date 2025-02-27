@@ -23,6 +23,7 @@ class ArticleBlock(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     is_code = models.BooleanField(default=False)
     block_order = models.PositiveSmallIntegerField(default=1)
+    header = models.CharField(max_length=50, default=None)
 
     def __str__(self):
         return  self.text_block[:10]
