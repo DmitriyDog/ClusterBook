@@ -3,7 +3,7 @@
         {% for chap in chapter_list %}
             <li>
             {% if chap.article_set.all|length > 1 %}
-                <span style="font-size: 1.5rem">{{ chap.chapter_name }}</span>
+                {{ chap.chapter_name }}
                 <ol>
                     {% for article in chap.article_set.all %}
                         <li><a href="{% url 'article_page' article.pk %}">{{ article.article_name }}</a></li>

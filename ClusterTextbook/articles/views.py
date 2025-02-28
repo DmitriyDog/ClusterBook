@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Chapter, Article
+from .models import Chapter, Article, ArticleBlock, ImageBlock
 
 
 def index(request):
@@ -21,11 +21,15 @@ def index(request):
 
 def article_page(request, article_id:int):
     #template = loader.get_template(f'{article_id}.html')
-    template = loader.get_template(f'introduction.html')
+    template = loader.get_template('article-page.html')
 
     chapter_list = Chapter.objects.order_by("chapter_order").prefetch_related("article_set")
+    opened_article = Article.objects.get(pk=article_id)
+    article_content = ArticleBlock.objects.filter(article=opened_article).order_by("block_order")
     context = {
-        "chapter_list": chapter_list
+        "chapter_list": chapter_list,
+        "article_content": article_content,
+        "article_header": opened_article.article_name
     }
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
