@@ -19,10 +19,13 @@ def index(request):
     # Возвращаем отрендеренную страницу
     return HttpResponse(rendered_page)
 
-def article_page(request, article_name:str):
-    template = loader.get_template(f'{article_name}.html')
+def article_page(request, article_id:int):
+    #template = loader.get_template(f'{article_id}.html')
+    template = loader.get_template(f'introduction.html')
 
-    # В данном случае никаких данных вставлять не нужно и контекста нет
-    context = {}
+    chapter_list = Chapter.objects.order_by("chapter_order").prefetch_related("article_set")
+    context = {
+        "chapter_list": chapter_list
+    }
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
