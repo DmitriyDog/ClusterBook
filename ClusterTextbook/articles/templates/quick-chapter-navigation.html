@@ -1,5 +1,20 @@
 <h5 style="margin-top: 20px;">Содержание главы</h5>
 <ol>
-    <li>Часть 1</li>
-    <li>Часть 2</li>
+    {% if header_list %}
+        {% for header in header_list %}
+            <li><span class="dynamic-link" data-header-id="{{ header.pk }}" style="cursor: pointer;">
+                {{ header.text_block }}</span></li>
+        {% endfor %}
+    {% endif %}
 </ol>
+<script>
+    const links = document.querySelectorAll('.dynamic-link'); // Все заголовки, сформированные django динамически
+    links.forEach(link => {
+        const headerId = link.dataset.headerId; // Получаем значение атрибута data-header-id
+        const targetHeader = document.getElementById(headerId); // Находим целевой элемент
+        if (targetHeader)
+        {
+            link.addEventListener('click', () => { targetHeader.scrollIntoView(true);
+            console.log(`Фрагмент текста ${headerId} был нажат.`);
+        }); } });
+</script>

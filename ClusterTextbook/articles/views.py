@@ -26,10 +26,12 @@ def article_page(request, article_id:int):
     chapter_list = Chapter.objects.order_by("chapter_order").prefetch_related("article_set")
     opened_article = Article.objects.get(pk=article_id)
     article_content = ArticleBlock.objects.filter(article=opened_article).order_by("block_order")
+    header_list = article_content.filter(type_of_text="header")
     context = {
         "chapter_list": chapter_list,
         "article_content": article_content,
-        "article_header": opened_article.article_name
+        "article_header": opened_article.article_name,
+        "header_list": header_list
     }
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)

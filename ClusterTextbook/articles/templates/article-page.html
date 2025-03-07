@@ -11,7 +11,15 @@
       <div class="col" style="background-color: #FAFAFA; height: 100vh;">
           <h2 style="margin-top: 20px;">{{ article_header }}</h2>
           {% for block in article_content %}
+            {% if block.type_of_text == "header" %}
+                 <h4 id="{{ block.pk }}">{{ block.text_block }}</h4>
+            {% elif block.type_of_text == "code" %}
+                <pre class="line-numbers" style="15px solid green">
+              <code class="language-python">{{ block.text_block }}</code>
+                </pre>
+            {% else %}
                 <p>{{ block.text_block }}</p>
+            {% endif %}
           {% endfor %}
           <pre class="line-numbers" style="15px solid green">
               <code class="language-python">for i in range(20):
