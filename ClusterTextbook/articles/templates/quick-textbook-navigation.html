@@ -1,16 +1,19 @@
-<div class="search-textbook-group">
+<!-- Форма поиска -->
+<form>
+  <input type="search" class="form-control rounded" placeholder="Поиск по главам" id="search-bar"/>
+</form>
 
-</div>
-
-<ol>
+<!-- Двухуровневый список -->
+<ol id="chapter-list">
     {% if chapter_list %}
         {% for chap in chapter_list %}
-            <li>
+            <li class="chapter-item">
             {% if chap.article_set.all|length > 1 %}
                 {{ chap.chapter_name }}
-                <ol>
+                <ol class="list-item">
                     {% for article in chap.article_set.all %}
-                        <li><a href="{% url 'article_page' article.pk %}" class="textbook-link">
+                        <li class="article-item">
+                            <a href="{% url 'article_page' article.pk %}" class="textbook-link">
                             {{ article.article_name }}</a></li>
                     {% endfor %}
                 </ol>
@@ -24,3 +27,54 @@
         {% endfor %}
     {% endif %}
 </ol>
+<script>
+    // Событийная функция, которая ищет введенную строку среди названий глав и статей
+    function searchArticles(event, originalChapterList) {
+         const chapterList = document.getElementById('chapter-list');
+         chapterList.innerHTML = originalChapterList;
+
+         const textToSearch = event.target.value.toLowerCase();
+         const chaptersList = document.querySelectorAll('.chapter-item');  // Все главы
+         const articlesList = document.querySelectorAll('.article-item');  // Все статьи
+
+         // Если статья не подходит по строке - исключаем ее из показанных
+         articlesList.forEach((article, index) => {
+            // Обрезаем пробелы на концах и приводим к нижнему регистру
+            const title = article.textContent.trim().toLowerCase();
+            if (textToSearch == '' || title.includes(textToSearch))
+            {
+                article.style.display = '';
+            }
+            else
+            {
+                article.style.display = 'none';
+            }});
+
+         // Аналогично логике для статей
+         chaptersList.forEach(chapter => {
+            const title = chapter.textContent.trim().toLowerCase();
+            childrenArticles = Array.from(chapter.querySelectorAll('.article-item'));
+            if (childrenArticles && childrenArticles.every(article => article.style.display == 'none') &&
+                title.includes(textToSearch))
+            {
+                chapter.style.display = '';
+                childrenArticles.forEach(article => article.style.display = '');
+            }
+            else if (textToSearch == '' || title.includes(textToSearch))
+            {
+                chapter.style.display = '';
+            }
+            else
+            {
+                chapter.style.display = 'none';
+            }});
+    }
+
+
+    const searchBar = document.getElementById('search-bar');
+    const originalChapterList = document.getElementById('chapter-list').innerHTML;
+    if (searchBar)
+    {
+        searchBar.addEventListener('input', function (event) { searchArticles(event, originalChapterList); });
+    }
+</script>
