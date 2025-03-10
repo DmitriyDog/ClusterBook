@@ -24,9 +24,17 @@
           <pre class="line-numbers" style="15px solid green">
               <code class="language-python">for i in range(20):
                   print(i)</code></pre>
+
           <p class="text-center">
+              {% if previous_article %}
+                <a href="{% url 'article_page' previous_article.pk %}" class="article-link">
+                    {{ previous_article.article_name }} <-</a>
+              {% endif %}
               <a href="/" class="article-link">Оглавление</a>
-              <a href="/articles/k-means" class="article-link">->K-средних</a>
+              {% if next_article %}
+                <a href="{% url 'article_page' next_article.pk %}" class="article-link">
+                    -> {{ next_article.article_name }}</a>
+              {% endif %}
           </p>
       </div>
 

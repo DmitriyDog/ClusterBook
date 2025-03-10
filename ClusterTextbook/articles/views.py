@@ -27,11 +27,17 @@ def article_page(request, article_id:int):
     opened_article = Article.objects.get(pk=article_id)
     article_content = ArticleBlock.objects.filter(article=opened_article).order_by("block_order")
     header_list = article_content.filter(type_of_text="header")
+    next_article = (Article.objects.filter(article_order__gt=opened_article.article_order)
+                    .order_by("article_order").first())
+    previous_article = (Article.objects.filter(article_order__lt=opened_article.article_order)
+                        .order_by("-article_order").first())
     context = {
         "chapter_list": chapter_list,
         "article_content": article_content,
         "article_header": opened_article.article_name,
-        "header_list": header_list
+        "header_list": header_list,
+        "next_article": next_article,
+        "previous_article": previous_article
     }
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
