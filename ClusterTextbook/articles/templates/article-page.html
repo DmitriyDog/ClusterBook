@@ -3,10 +3,22 @@
 
 {% block page_content %}
 <div class="row">
-      <div class="col-2 d-none d-xxl-block">
+      <div class="col-2 d-none d-xxl-block" id="textbook-content-container">
         <h4 style="margin-top: 20px;">Содержание</h4>
-        {% include "quick-textbook-navigation.html" %}
+          <div id="panel-destination">
+              <div id="transported-elem">
+              {% include "quick-textbook-navigation.html" %}
+              </div>
+          </div>
       </div>
+     <div class="offcanvas offcanvas-start" id="offcanvas-content-container">
+         <div class="offcanvas-header">
+             <h4 style="margin-top: 20px;">Содержание</h4>
+             <button type="button" class="btn-close" id="hide-offcanv"></button>
+         </div>
+         <div class="offcanvas-body" id="offcanv-destination">
+         </div>
+     </div>
 
       <div class="col" style="background-color: #FAFAFA; height: 100vh;">
           <h2 style="margin-top: 20px;">{{ article_header }}</h2>
@@ -24,7 +36,10 @@
           <pre class="line-numbers" style="15px solid green">
               <code class="language-python">for i in range(20):
                   print(i)</code></pre>
-
+          <form method="POST">
+              {% csrf_token %}
+              {{ read_form }}
+          </form>
           <p class="text-center">
               {% if previous_article %}
                 <a href="{% url 'article_page' previous_article.pk %}" class="article-link">
@@ -42,4 +57,38 @@
         {% include "quick-chapter-navigation.html" %}
       </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const navigationPanel = document.getElementById('panel-destination');
+    const navigationOffcanv = document.getElementById('offcanv-destination');
+    const transportedElem = document.getElementById('transported-elem');
+    const showBtn = document.getElementById('show-btn');
+    const hideBtn = document.getElementById('hide-offcanv');
+    const container = document.getElementById('textbook-content-container');
+    const offcanv = document.getElementById('offcanvas-content-container');
+
+    function checkHeight() {
+        if (container.clientWidth == 0) {
+            container.style.display = 'none';
+            showBtn.classList.remove('d-none');
+        } else {
+            container.style.display = 'flex';
+            showBtn.classList.add('d-none');
+        }
+    }
+
+    window.addEventListener('resize', checkHeight);
+    checkHeight();
+
+    showBtn.addEventListener('click', function() {
+        navigationOffcanv.appendChild(transportedElem);
+        offcanv.classList.add('show');
+        });
+
+    hideBtn.addEventListener('click', function() {
+        navigationPanel.appendChild(transportedElem);
+        offcanv.classList.remove('show');
+        });
+    });
+</script>
 {% endblock page_content %}

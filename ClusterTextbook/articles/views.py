@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import Chapter, Article, ArticleBlock, ImageBlock
+from .forms import ReadArticleForm
 
 
 def index(request):
@@ -37,7 +38,8 @@ def article_page(request, article_id:int):
         "article_header": opened_article.article_name,
         "header_list": header_list,
         "next_article": next_article,
-        "previous_article": previous_article
+        "previous_article": previous_article,
+        "read_form": ReadArticleForm
     }
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)

@@ -10,6 +10,14 @@
     margin: 8px;
     font-size: 1.2rem;}
 
+.boolean-style {
+    font-size: 1.2rem;
+    margin-bottom: 10px;}
+
+.big-checkbox {
+    width: 17px;
+    height: 17px;}
+
 ol {
    /* убираем стандартную нумерацию */
    list-style: none;
