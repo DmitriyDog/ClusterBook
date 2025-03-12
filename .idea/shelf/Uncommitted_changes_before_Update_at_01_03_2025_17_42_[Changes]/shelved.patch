@@ -1,0 +1,4 @@
+diff --git a/.venv/Lib/site-packages/__init__.py b/.venv/Lib/site-packages/__init__.py
+deleted file mode 100644
+diff --git a/.venv/Lib/__init__.py b/.venv/Lib/__init__.py
+deleted file mode 100644
