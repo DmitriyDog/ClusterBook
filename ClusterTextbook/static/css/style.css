@@ -46,3 +46,22 @@ ol > li > ol > li::before {
     content: counter(main) "." counter(sub) ". "; /* Основной счетчик + дополнительный счетчик */
     counter-increment: sub; /* Увеличиваем дополнительный счетчик */
     position: absolute; left: 2em; /* Смещение для второго уровня */ }
+
+li.list-group-item::before {
+    content:none;
+}
+
+#search-form {
+    position: relative; /* Родительский контейнер */
+}
+
+#search-results-container {
+    position: absolute; /* Абсолютное позиционирование */
+    top: 100%; /* Размещаем контейнер под полем ввода */
+    left: 0;
+    width: 100%; /* Ширина как у поля ввода */
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Чтобы контейнер был поверх других элементов */
+}

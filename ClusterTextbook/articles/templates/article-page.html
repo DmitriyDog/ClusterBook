@@ -24,23 +24,25 @@
           <h2 style="margin-top: 20px;">{{ article_header }}</h2>
           {% for block in article_content %}
             {% if block.type_of_text == "header" %}
-                 <h4 id="{{ block.pk }}">{{ block.text_block }}</h4>
+                 <h4 id="{{ block.pk }}">{{ block.text_block|linebreaks  }}</h4>
             {% elif block.type_of_text == "code" %}
                 <pre class="line-numbers" style="15px solid green">
               <code class="language-python">{{ block.text_block }}</code>
                 </pre>
             {% else %}
-                <p>{{ block.text_block }}</p>
+                <p>{{ block.text_block|linebreaks }}</p>
             {% endif %}
           {% endfor %}
           <pre class="line-numbers" style="15px solid green">
               <code class="language-python">for i in range(20):
                   print(i)</code></pre>
+
           <form method="POST" action="{% url 'mark_article_read' article_pk %}" id="read-form">
               {% csrf_token %}
                Статья прочитана <input type="checkbox" style="boolean-style" class="big-checkbox"
                       name="is_checked" {% if is_article_read %}checked{% else %}unchecked{% endif %}>
           </form>
+
           <p class="text-center">
               {% if previous_article %}
                 <a href="{% url 'article_page' previous_article.pk %}" class="article-link">

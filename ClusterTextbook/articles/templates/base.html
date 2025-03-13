@@ -16,9 +16,12 @@
         <button class="btn btn-outline-primary d-none" id="show-btn" href="offcanvas-content-container">
             Содержание</button>
         <a class="navbar-brand mb-0 h1" href="/">Алгоритмы кластеризации</a>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+        <form class="d-flex" role="search" method="POST" action="{% url 'search_article' %}" id="search-form">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Поиск" name="q"
+                   aria-label="Search" id="search-input">
             <button class="btn btn-outline-success" type="submit">Поиск</button>
+            <div id="search-results-container"></div>
         </form>
     </div>
 </nav>
@@ -28,5 +31,35 @@
 <script src="{% static 'js/prism.min.js' %}"></script>
 <script src="{% static 'js/prism-line-numbers.js' %}"></script>
 <script src="{% static 'js/prism-python.min.js' %}"></script>
+<script src="{% static 'js/axios.min.js' %}"></script>
+<script> document.getElementById('search-form').addEventListener('submit', function(event)
+            { event.preventDefault(); // Отменяем стандартное поведение отправки формы
+             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+             const searchQuery = document.getElementById('search-input').value;
+             const resultsContainer = document.getElementById('search-results-container');
+
+             if (searchQuery == "") { resultsContainer.innerHTML = ""; return; }
+
+             axios.post('{% url "search_article" %}',
+                    { q: searchQuery },
+                    { headers: { 'X-CSRFToken': csrfToken,
+                                'Content-Type': 'application/x-www-form-urlencoded'} })
+                        .then(response => {
+                            // Очистим контейнер результатов
+                            document.getElementById('search-results-container').innerHTML = '';
+                            // Если пришли результаты, создаем HTML-список
+                            if (response.data.search_results != undefined)
+                            {
+                                let resultsHtml = '<ul class="list-group">';
+                                response.data.search_results.forEach(article =>
+                                    { resultsHtml += ` <li class="list-group-item"> <a href="/articles/${article.pk}"
+                                     class="article-link">${article.article_name}</a> </li> `; });
+               resultsHtml += '</ul>';
+               resultsContainer.innerHTML = resultsHtml; }
+               else
+               {
+                    resultsContainer.innerHTML =
+                            '<ul class="list-group"><li class="list-group-item"><h5>Не найдено подходящей статьи</h5></li></ul>'; } })
+                             .catch(error => { console.error('Ошибка при выполнении поиска:', error); }); }); </script>
 </body>
 </html>

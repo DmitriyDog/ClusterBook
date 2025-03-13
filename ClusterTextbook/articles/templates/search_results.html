@@ -1,0 +1,12 @@
+<h5>Результаты поиска:</h5>
+<ul class="list-group">
+  {% if search_results %}
+      {% for article in search_results %}
+        <li class="list-group-item">
+          <a href="{% url 'article_page' article.pk %}" class="article-link">{{ article.article_name }}</a>
+        </li>
+      {% endfor %}
+  {% else %}
+  <li class="list-group-item"><h5>Не найдено подходящей статьи</h5></li>
+  {% endif %}
+</ul>
