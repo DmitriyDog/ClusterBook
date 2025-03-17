@@ -1,11 +1,12 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Chapter, Article, ArticleBlock, ImageBlock
+from .models import Chapter, Article, ArticleBlock, ImageBlock, ContentBlock
 from .forms import ReadArticleForm
 from django.core.cache import cache
 from django.shortcuts import redirect
 from .side_algorithms.kmp import KMPSearch
 from django.http import JsonResponse
+from django.conf import settings
 
 
 def index(request):
@@ -32,7 +33,30 @@ def article_page(request, article_id:int):
 
     chapter_list = Chapter.objects.order_by("chapter_order").prefetch_related("article_set")
     opened_article = Article.objects.get(pk=article_id)
-    article_content = ArticleBlock.objects.filter(article=opened_article).order_by("block_order")
+
+    article_content = ArticleBlock.objects.filter(article=opened_article)
+    image_content = ImageBlock.objects.filter(article=opened_article)
+    content_dicts = [] # Словарь всех блоков изображений и текста на странице статьи
+
+    for art in article_content:
+        content_dicts.append({
+            "id": art.id,
+            "type": "text",
+            "type_of_text": art.type_of_text,
+            "block_order": art.block_order,
+            "text_block": art.text_block
+        })
+
+    for image in image_content:
+        content_dicts.append({
+            "id": image.id,
+            "type": "image",
+            "image": image.image,
+            "block_order": image.block_order
+        })
+        print(image.image.url)
+    content = sorted(content_dicts, key=lambda x: x["block_order"]) # Изображения и текст
+
     header_list = article_content.filter(type_of_text="header")
     next_article = (Article.objects.filter(article_order__gt=opened_article.article_order)
                     .order_by("article_order").first())
@@ -40,9 +64,11 @@ def article_page(request, article_id:int):
                         .order_by("-article_order").first())
     cache_list = [article.pk for article in Article.objects.all() if cache.get(f"article_{article.pk}_read")]
 
+
+
     context = {
         "chapter_list": chapter_list,
-        "article_content": article_content,
+        "article_content": content,
         "article_header": opened_article.article_name,
         "header_list": header_list,
         "next_article": next_article,

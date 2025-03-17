@@ -23,14 +23,18 @@
       <div class="col" style="background-color: #FAFAFA; height: 100vh;">
           <h2 style="margin-top: 20px;">{{ article_header }}</h2>
           {% for block in article_content %}
-            {% if block.type_of_text == "header" %}
-                 <h4 id="{{ block.pk }}">{{ block.text_block|linebreaks  }}</h4>
-            {% elif block.type_of_text == "code" %}
-                <pre class="line-numbers" style="15px solid green">
-              <code class="language-python">{{ block.text_block }}</code>
-                </pre>
+            {% if block.type == "text" %}
+                {% if block.type_of_text == "header" %}
+                     <h4 id="{{ block.id }}">{{ block.text_block|linebreaks  }}</h4>
+                {% elif block.type_of_text == "code" %}
+                    <pre class="line-numbers" style="15px solid green">
+                  <code class="language-python">{{ block.text_block }}</code>
+                    </pre>
+                {% else %}
+                    <p>{{ block.text_block|linebreaks }}</p>
+                {% endif %}
             {% else %}
-                <p>{{ block.text_block|linebreaks }}</p>
+                <img src="{{ block.image.url }}" alt="Изображение" class="center-image">
             {% endif %}
           {% endfor %}
           <pre class="line-numbers" style="15px solid green">

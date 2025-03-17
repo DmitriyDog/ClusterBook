@@ -65,3 +65,9 @@ li.list-group-item::before {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000; /* Чтобы контейнер был поверх других элементов */
 }
+
+.center-image {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
