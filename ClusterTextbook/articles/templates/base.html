@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+<!DOCTYPE html>             {% comment %} ДаблКлик {% endcomment %}
+{% load static %}           {% comment %} Позволяет использовать css, js, img из static файлов {% endcomment %}
 <html lang="en">
 <head>
-  {% load static %}
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/prism.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/prism-line-numbers.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
-    <title>{% block title %}DefaultTitle{% endblock title %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">     {% comment %} Применение css {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/prism.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prism-line-numbers.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <title>{% block title %}DefaultTitle{% endblock title %}</title>        {% comment %} Место подстановки оглавления {% endcomment %}
 </head>
+
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #E0F3AA; font-size: 18px;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -25,10 +26,12 @@
         </form>
     </div>
 </nav>
+
 <div class="container-fluid">
-  {% block page_content %} {% endblock page_content %}
+    {% block page_content %} {% endblock page_content %}                    {% comment %} Место подстановки контента {% endcomment %}
 </div>
-<script src="{% static 'js/prism.min.js' %}"></script>
+
+<script src="{% static 'js/prism.min.js' %}"></script>                      {% comment %} Применение js {% endcomment %}
 <script src="{% static 'js/prism-line-numbers.js' %}"></script>
 <script src="{% static 'js/prism-python.min.js' %}"></script>
 <script src="{% static 'js/axios.min.js' %}"></script>
