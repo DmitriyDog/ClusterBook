@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Chapter, Article, ArticleBlock, ImageBlock, ContentBlock
+from .models import Chapter, Article, ArticleBlock, ImageBlock
 from .forms import ReadArticleForm
 from django.core.cache import cache
 from django.shortcuts import redirect

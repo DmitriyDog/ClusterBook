@@ -36,8 +36,9 @@ class ArticleBlock(models.Model):
 
 class ImageBlock(models.Model):
     image_name = models.CharField()
-    image_order = models.PositiveSmallIntegerField("Порядок изображения", default=1)
+    block_order = models.PositiveSmallIntegerField("Порядок изображения", default=1)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="images/")
 
     def __str__(self):
         return self.image_name
