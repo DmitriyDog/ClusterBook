@@ -36,23 +36,8 @@ class ArticleBlock(models.Model):
 
 class ImageBlock(models.Model):
     image_name = models.CharField()
-    block_order = models.PositiveSmallIntegerField("Порядок изображения", default=1)
+    image_order = models.PositiveSmallIntegerField("Порядок изображения", default=1)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="images/", null=True)
 
     def __str__(self):
         return self.image_name
-
-
-# Класс для сырого SQL-запроса из БД по получению текстовых
-# и картиночных блоков вместе и дальнейшего их размещения на странице
-class ContentBlock:
-    def __init__(self, text_block, type_of_text, order_value):
-        self.text_block = text_block
-
-        # Хранит в себе либо одно из значений, либо путь к изображению в зависимости от типа контента
-        self.type_of_text = type_of_text
-        self.order_value = order_value
-
-    def __str__(self):
-        print(self.order_value)
